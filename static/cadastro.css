@@ -2,7 +2,7 @@
 .form-container {
      
     max-width: 500px; /* Define um limite de largura */
-    margin: 40px auto; /* Centraliza */
+    margin: 10px auto; /* Centraliza */
     padding: 25px;
 
     
@@ -21,8 +21,8 @@
 .form-container select,
 .form-container textarea {
     width: 100%;
-    padding: 12px;
-    margin: 10px 0;
+    padding: 5px;
+    margin: 10px 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;

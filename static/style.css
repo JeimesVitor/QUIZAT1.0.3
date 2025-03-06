@@ -6,14 +6,14 @@ body {
 }
 
 .container {
-    width: 100%;
+    width: 90%;
     padding: 5px;
 }
 
 footer {
     background-color: #333;
     color: white;
-    padding: 20px 0;
+    padding: 0px 0;
     text-align: center;
     width: 100%;
     position: fixed;

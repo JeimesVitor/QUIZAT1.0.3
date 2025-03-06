@@ -1,7 +1,7 @@
 /* Estilos gerais da navbar */
 nav {
     background-color: #114416; /* Verde escuro (cor principal) */
-    padding: 5px 30px;
+    padding: 0px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
