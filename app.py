@@ -35,6 +35,7 @@ PASSWORD = os.getenv('PASSWORD')
 
 
 def gerar_grafico(escola=None, cidade=None, genero=None, idade=None, pontuacao=None):
+    print(f"Gerando gráfico com os filtros: escola={escola}, cidade={cidade}, genero={genero}, idade={idade}, pontuacao={pontuacao}")
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -157,6 +158,7 @@ def cadastro():
 
 
 def get_alunos(escola=None, cidade=None, genero=None, idade=None, pontuacao=None):
+    print(f"Filtros: escola={escola}, cidade={cidade}, genero={genero}, idade={idade}, pontuacao={pontuacao}")
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
@@ -203,23 +205,28 @@ def relatorio():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
 
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
 
-    # Buscar valores distintos do banco de dados
-    cursor.execute("SELECT DISTINCT escola FROM alunos")
-    escolas = [row[0] for row in cursor.fetchall()]
+        # Buscar valores distintos do banco de dados
+        cursor.execute("SELECT DISTINCT escola FROM alunos")
+        escolas = [row[0] for row in cursor.fetchall()]
 
-    cursor.execute("SELECT DISTINCT cidade FROM alunos")
-    cidades = [row[0] for row in cursor.fetchall()]
+        cursor.execute("SELECT DISTINCT cidade FROM alunos")
+        cidades = [row[0] for row in cursor.fetchall()]
 
-    cursor.execute("SELECT DISTINCT genero FROM alunos")
-    generos = [row[0] for row in cursor.fetchall()]
+        cursor.execute("SELECT DISTINCT genero FROM alunos")
+        generos = [row[0] for row in cursor.fetchall()]
 
-    cursor.execute("SELECT DISTINCT pontuacao FROM alunos ORDER BY pontuacao ASC")
-    pontuacoes = [row[0] for row in cursor.fetchall()]
+        cursor.execute("SELECT DISTINCT pontuacao FROM alunos ORDER BY pontuacao ASC")
+        pontuacoes = [row[0] for row in cursor.fetchall()]
 
-    conn.close()
+        conn.close()
+
+    except sqlite3.Error as e:
+        print(f"Erro no banco de dados: {e}")
+        return render_template('error.html', erro="Erro ao acessar o banco de dados.")
 
     # Capturar filtros do formulário
     escola = request.form.get('escola')
@@ -243,7 +250,6 @@ def relatorio():
         pontuacoes=pontuacoes,
         grafico=grafico
     )
-
 
 
 
