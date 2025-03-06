@@ -1,15 +1,13 @@
 import sqlite3
 import os
 
-# Caminho relativo para o banco de dados
-DB_PATH = os.path.join(os.getcwd(), 'alunos.db')
+# Caminho relativo ao diretório do script
+DB_PATH = os.path.join(os.path.dirname(__file__), 'alunos.db')
 
 def init_db():
-    # Conectar ao banco de dados (será criado se não existir)
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
-    # Criar a tabela de alunos caso não exista
     c.execute('''
         CREATE TABLE IF NOT EXISTS alunos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,10 +22,9 @@ def init_db():
         )
     ''')
 
-    print("Banco de dados inicializado com sucesso!")
+    print(f"Banco de dados '{DB_PATH}' inicializado com sucesso!")
 
     conn.commit()
     conn.close()
 
-if __name__ == '__main__':
-    init_db()
+init_db()

@@ -8,6 +8,11 @@ import seaborn as sns
 import numpy as np
 from collections import Counter
 import sys
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv('.env')
 
 
 
@@ -15,9 +20,11 @@ import sys
 init_db()
 
 app = Flask(__name__)
-app.secret_key = 'chave_secreta'
+app.secret_key = os.getenv('APP_SECRET_KEY')
 
-DB_PATH = r'C:\QUIZAT1.0.3\alunos.db'  # Defina um caminho único
+DB_PATH = os.getenv('DB_PATH')  # Defina um caminho único
+# Definir uma senha fixa
+PASSWORD = os.getenv('PASSWORD')
 
 
 
@@ -89,15 +96,17 @@ def gerar_grafico(escola=None, cidade=None, genero=None, idade=None, pontuacao=N
 # Função para inserir dados no banco de dados
 def salvar_no_banco(nome, idade, escola, turma, cidade, genero, pontuacao):
     conn = sqlite3.connect(DB_PATH)
-
-    c = conn.cursor()
-    # Inserir os dados de cadastro e pontuação na tabela alunos
-    c.execute('''
-    INSERT INTO alunos (nome, idade, escola, turma, cidade, genero, pontuacao)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (nome, idade, escola, turma, cidade, genero, pontuacao))
-    conn.commit()  # Salva as mudanças no banco de dados
-    conn.close()  # Fecha a conexão com o banco
+    try:
+        c = conn.cursor()
+        c.execute('''
+        INSERT INTO alunos (nome, idade, escola, turma, cidade, genero, pontuacao)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (nome, idade, escola, turma, cidade, genero, pontuacao))
+        conn.commit()
+    except sqlite3.Error as e:
+        print(f"Erro ao inserir no banco: {e}")
+    finally:
+        conn.close()
 
    
 
@@ -139,8 +148,7 @@ def cadastro():
 
 
 
-# Definir uma senha fixa
-PASSWORD = "adm123"
+
 
 def get_alunos(escola=None, cidade=None, genero=None, idade=None, pontuacao=None):
     conn = sqlite3.connect(DB_PATH)
