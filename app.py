@@ -22,7 +22,8 @@ init_db()
 app = Flask(__name__)
 app.secret_key = os.getenv('APP_SECRET_KEY')
 
-DB_PATH = os.getenv('DB_PATH')  # Defina um caminho único
+DB_PATH = os.getenv("DB_PATH", "/tmp/alunos.db")  # Se não encontrar a variável, usa '/tmp/alunos.db'
+
 # Definir uma senha fixa
 PASSWORD = os.getenv('PASSWORD')
 
