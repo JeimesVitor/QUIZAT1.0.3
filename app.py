@@ -17,7 +17,12 @@ load_dotenv('.env')
 
 
 # Chame o init_db para garantir que a tabela 'alunos' seja criada
-init_db()
+try:
+    init_db()
+    print("Banco de dados inicializado com sucesso!")  # Verifique nos logs do Render
+except Exception as e:
+    print(f"Erro ao inicializar o banco de dados: {e}")
+
 
 app = Flask(__name__)
 app.secret_key = os.getenv('APP_SECRET_KEY')
