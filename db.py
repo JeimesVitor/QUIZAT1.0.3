@@ -1,18 +1,17 @@
 import sqlite3
+import os
 
-DB_PATH = r'C:\QUIZAT1.0.3\alunos.db' 
+# Caminho relativo para o banco de dados
+DB_PATH = os.path.join(os.getcwd(), 'alunos.db')
 
 def init_db():
     # Conectar ao banco de dados (será criado se não existir)
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
-    # Verificar se a tabela alunos existe
-    c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='alunos';")
-    if not c.fetchone():
-        # Criar a tabela de alunos caso não exista
-        c.execute('''
-        CREATE TABLE alunos (
+    # Criar a tabela de alunos caso não exista
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS alunos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
             idade INTEGER NOT NULL,
@@ -22,13 +21,10 @@ def init_db():
             genero TEXT NOT NULL,
             pontuacao INTEGER NOT NULL,
             data TEXT NOT NULL DEFAULT CURRENT_DATE
-)       
+        )
+    ''')
 
-        ''')
-
-        print("Tabela 'alunos' criada com sucesso!")
-    else:
-        print("Tabela 'alunos' já existe.")
+    print("Banco de dados inicializado com sucesso!")
 
     conn.commit()
     conn.close()
