@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Perguntas{% endblock %}
+{% block content %}
+
+<div class="container-pergunta">
+    <h2>{{ pergunta }}</h2>
+
+    <form method="POST" action="{{ url_for('perguntas_page') }}">
+        <div class="option">
+            <input type="radio" name="resposta" value="A" required id="sim">
+            <label for="sim">Sim</label>
+        </div>
+
+        <div class="option">
+            <input type="radio" name="resposta" value="B" required id="nao">
+            <label for="nao">Não</label>
+        </div>
+
+        <div class="buttons">
+            {% if pergunta_atual < 10 %}
+                <button type="submit" class="next-btn">Próxima Pergunta</button>
+            {% else %}
+                <button type="submit" formaction="{{ url_for('finalizar') }}" class="finish-btn">Finalizar Pesquisa</button>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+{% endblock %}

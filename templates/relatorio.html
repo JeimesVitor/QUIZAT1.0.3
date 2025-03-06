@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Relatório{% endblock %}
+
+{% block content %}
+<div class="container-relatorio">
+    <h2 class="title">Relatório de Alunos</h2>
+
+    <form method="post" class="search-form">
+        
+        <!-- Campo de Escola -->
+        <select name="escola" class="search-input">
+            <option value="">Selecione a Escola</option>
+            {% for escola in escolas %}
+                <option value="{{ escola }}" {% if escola == request.form.get('escola') %}selected{% endif %}>{{ escola }}</option>
+            {% endfor %}
+        </select>
+
+    
+        <!-- Campo de Cidade -->
+        <select name="cidade" class="search-input">
+            <option value="">Selecione a Cidade</option>
+            {% for cidade in cidades %}
+                <option value="{{ cidade }}" {% if cidade == request.form.get('cidade') %}selected{% endif %}>
+                    {{ cidade }}
+                </option>
+            {% endfor %}
+        </select>
+    
+        <!-- Campo de Gênero -->
+        <select name="genero" class="search-input">
+            <option value="">Selecione o Gênero</option>
+            {% for genero in generos %}
+                <option value="{{ genero }}" {% if genero == request.form.get('genero') %}selected{% endif %}>
+                    {{ genero }}
+                </option>
+            {% endfor %}
+        </select>
+    
+            
+        <!-- Campo de Pontuação -->
+        <select name="pontuacao" class="search-input">
+            <option value="">Selecione a Pontuação</option>
+            {% for pontuacao in pontuacoes %}
+                <option value="{{ pontuacao }}" {% if pontuacao == request.form.get('pontuacao') %}selected{% endif %}>
+                    {{ pontuacao }}
+                </option>
+            {% endfor %}
+        </select>
+    
+        <button type="submit" class="search-button">Filtrar</button>
+    </form>
+    
+    
+    
+
+    <!-- Exibir Gráfico -->
+    {% if grafico %}
+        <div class="chart-container">
+            <h3 class="chart-title">Gráfico de Pontuação</h3>
+            <img src="{{ grafico }}" alt="Gráfico de Pontuação" class="chart-image"/>
+        </div>
+    {% endif %}
+
+    <!-- Tabela de Resultados -->
+    <div class="table-container">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Escola</th>
+                    <th>Cidade</th>
+                    <th>Gênero</th>
+                    <th>Idade</th>
+                    <th>Pontuação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aluno in alunos %}
+                <tr>
+                    <td>{{ aluno[0] }}</td>
+                    <td>{{ aluno[1] }}</td>
+                    <td>{{ aluno[2] }}</td>
+                    <td>{{ aluno[3] }}</td>
+                    <td>{{ aluno[4] }}</td>
+                    <td>{{ aluno[5] }}</td>
+                    <td>{{ aluno[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botão Sair -->
+    <div class="logout-button-container">
+        <a href="{{ url_for('cadastro') }}" class="logout-button">Sair</a>
+    </div>
+</div>
+{% endblock %}

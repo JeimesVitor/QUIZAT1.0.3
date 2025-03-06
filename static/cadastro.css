@@ -1,0 +1,63 @@
+
+.form-container {
+     
+    max-width: 500px; /* Define um limite de largura */
+    margin: 40px auto; /* Centraliza */
+    padding: 25px;
+
+    
+    
+    background-color: rgba(3, 39, 2, 0.9); /* Cor com transparência */
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Campos do formulário */
+.form-container input,
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+    
+}
+
+/* Efeito de foco */
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+    border-color: #2ecc71; /* Verde vibrante */
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.6);
+    outline: none;
+}
+
+/* Botão estilizado */
+.form-container button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-container button:hover {
+    background: linear-gradient(45deg, #219150, #26a65b);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+h1, label{
+    color: #ccc;
+}
